@@ -65,20 +65,20 @@ function Header() {
   );
 }
 function Menu() {
+  // check conditio if pizza empty by shortcircuit
+  const numpizzas = pizzaData.length;
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => {
-          return <Pizza pizzaObj={pizza} key={pizza.name} />;
-        })}
-      </ul>
-      {/* <Pizza
-        name="Pizza Spinaci"
-        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-        photoName="pizzas/spinaci.jpg"
-        price="10"
-      /> */}
+      {numpizzas > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => {
+            return <Pizza pizzaObj={pizza} key={pizza.name} />;
+          })}
+        </ul>
+      ) : (
+        <p>We're still working on Menu . Please comeback later</p>
+      )}
     </main>
   );
 }
@@ -96,7 +96,7 @@ function Pizza(props) {
 }
 function Footer() {
   const hour = new Date().getHours();
-  const openHour = 11;
+  const openHour = 12;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
@@ -106,13 +106,18 @@ function Footer() {
   console.log(hour);
   return (
     <footer className="footer">
-      {isOpen && (
+      {isOpen ? (
         <div className="order">
           <p>
             We're open until {closeHour}:00. Come and visit us or order online
           </p>
           <button className="btn">Order</button>
         </div>
+      ) : (
+        <p>
+          We're heppy to welcome you between{openHour}:00 and {closeHour}:00.
+          Come and visit us or order online
+        </p>
       )}
     </footer>
   );
